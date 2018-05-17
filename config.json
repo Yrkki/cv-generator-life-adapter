@@ -8,6 +8,6 @@
     },
     "data": {
         "location": "public",
-        "awsLocation": "https://s3-eu-west-1.amazonaws.com/cv-generator-life-log/deploy/public"
+        "awsLocation": "deploy/public"
     }
 }
