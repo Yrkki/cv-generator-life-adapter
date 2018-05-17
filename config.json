@@ -1,0 +1,13 @@
+{
+    "http": {
+        "port": 2500,
+        "hosts": [
+            "localhost",
+            "192.168.1.2"
+        ]
+    },
+    "data": {
+        "location": "public",
+        "awsLocation": "https://s3-eu-west-1.amazonaws.com/cv-generator-life-log/deploy/public"
+    }
+}

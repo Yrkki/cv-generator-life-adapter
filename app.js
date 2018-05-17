@@ -4,25 +4,71 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var cors = require('cors');
+var nconf = require('nconf');
+var favicon = require('serve-favicon');
+var fs = require('fs');
+var compression = require('compression');
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.set('appName', 'Life Adapter');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.set('appName', 'Life Adapter');
+// set up congifuration
+nconf.argv().env();
+nconf.file({ file: 'config.json' });
+nconf.defaults({
+  "http": {
+    "port": 2500
+  },
+  "data": {
+    "location": "public"
+  }
+});
+
+// compress responses
+app.use(compression());
+
+app.set('location', nconf.get('data:location'));
+app.set('awsLocation', nconf.get('data:awsLocation'));
+
+app.set('json', path.join(app.get('location'), 'json'));
+
+// load app icon
+var faviconPath = path.join(__dirname, app.get('location'), 'favicon.ico');
+if (fs.existsSync(faviconPath)) {
+  app.use(favicon(faviconPath));
+}
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, app.get('location')), { maxAge: '1w' }));
+
+app.use(cors());
+
+/* Redirect http to https */
+app.get('*', function (req, res, next) {
+  if (req.headers['x-forwarded-proto'] != 'https' && !nconf.get('http:hosts').includes(req.hostname)) {
+    var url = 'https://' + req.hostname;
+    // var port = app.get('port');
+    // if (port)
+    //   url += ":" + port;
+    url += req.url;
+    res.redirect(url);
+  }
+  else
+    next() /* Continue to other routes if we're not redirecting */
+});
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
