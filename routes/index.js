@@ -4,7 +4,7 @@ var s3 = require('../public/javascripts/aws');
 
 /* GET home page. */
 router.get(/.*/, function (req, res, next) {
-  AllowCors(res);
+  AllowCors(req, res);
 
   if (req.url.length > 1) {
     const location = req.app.get('location');
@@ -12,7 +12,7 @@ router.get(/.*/, function (req, res, next) {
     if (location.startsWith('http')) {
       res.redirect(location + req.url);
     } else {
-      const key = decodeURI(path.resolve(location, req.url));
+      const key = decodeURI(location + req.url);
       // console.log('Will request the following key:', key);
 
       if (req.app.get('data').includes('aws')) {
@@ -52,7 +52,8 @@ router.get(/.*/, function (req, res, next) {
 
 module.exports = router;
 
-function AllowCors(res) {
+function AllowCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', req.headers.origin);
+  // res.setHeader('Access-Control-Allow-Headers', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Headers', '*');
 }
