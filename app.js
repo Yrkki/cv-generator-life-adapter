@@ -60,7 +60,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, location), { maxAge: '1w' }));
 
 app.use(cors());
 
@@ -79,6 +78,7 @@ app.get('*', function (req, res, next) {
 });
 
 app.use('/', indexRouter);
+app.use(express.static(path.join(__dirname, location), { maxAge: '1w' }));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
