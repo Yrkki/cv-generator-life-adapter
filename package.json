@@ -28,6 +28,6 @@
     "serve-favicon": "^2.5.0"
   },
   "engines": {
-    "node": "8.11.1"
+    "node": "8.11.2"
   }
 }
