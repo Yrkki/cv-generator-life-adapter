@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "snyk test && echo \"Error: no test specified\" && exit 0",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "CV Generator",
@@ -25,9 +27,11 @@
     "ms": "^2.1.2",
     "nconf": "^0.10.0",
     "pug": "3.0.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "snyk": "^1.335.0"
   },
   "engines": {
     "node": "14.3.0"
-  }
+  },
+  "snyk": true
 }
