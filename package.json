@@ -7,7 +7,9 @@
     "start": "node ./bin/www",
     "test": "snyk test && echo \"Error: no test specified\" && exit 0",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "dev:plan:update:report:action:update-packages": "npm-run-all update-packages:*",
+    "update-packages:npx-npm-check-updates-u": "npx npm-check-updates -u --packageFile package.json && npm install"
   },
   "keywords": [
     "CV Generator",
@@ -16,22 +18,22 @@
   "author": "jorich",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.688.0",
+    "aws-sdk": "^2.741.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.5",
     "cors": "^2.8.5",
     "debug": "~4.1.1",
     "express": "~4.17.1",
-    "http-errors": "~1.7.3",
+    "http-errors": "~1.8.0",
     "morgan": "~1.10.0",
     "ms": "^2.1.2",
     "nconf": "^0.10.0",
     "pug": "3.0.0",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.335.0"
+    "snyk": "^1.385.2"
   },
   "engines": {
-    "node": "14.3.0"
+    "node": "14.8.0"
   },
   "snyk": true
 }
