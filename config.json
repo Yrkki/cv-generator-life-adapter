@@ -7,8 +7,9 @@
             "192.168.1.6"
         ]
     },
-    "data": {
+    "location": {
         "default": "public",
         "aws": "deploy/public"
-    }
-}
+    },
+    "endpointType": "CloudFront"
+  }

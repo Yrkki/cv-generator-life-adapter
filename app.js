@@ -32,20 +32,56 @@ nconf.defaults({
       "192.168.1.6"
     ]
   },
-  "data": {
+  "location": {
     "default": "public",
     "aws": "deploy/public"
-  }
+  },
+  "endpointType": "CloudFront"
 });
 
 // compress responses
 app.use(compression());
 
-const data = (process.env.CV_GENERATOR_LIFE_ADAPTER_DATA || 'default');
-app.set('data', data);
-const location = nconf.get('data:' + data);
+// override console log
+var overrideConsoleLog = require('./override-console-log');
+overrideConsoleLog();
+
+// set up data location
+const location = (process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION || 'default');
 app.set('location', location);
-// console.log('Data location: [%s:%s]', data, location);
+console.info(`Data location: ${location}`);
+
+// set up data prefix
+const prefix = nconf.get('location:' + location);
+app.set('prefix', prefix);
+console.info(`Data prefix: ${prefix}`);
+
+// set up endpoint type
+const endpointType = (process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE || nconf.get('endpointType') || 'CloudFront');
+app.set('endpointType', endpointType);
+console.info(`Endpoint type: ${endpointType}`);
+
+// set up CDN domain name
+var endpoints = require('./public/javascripts/aws');
+if (location.includes('aws')) {
+  console.info(`Using location: ${location}...`);
+  if (endpointType === 'CloudFront') {
+    console.info(`Accessing endpointType: ${endpointType}...`);
+    const endpoint = endpoints.endpointCloudFront;
+    const distributionsRequest = endpoint.listDistributions((err, data) => {
+      if (data) {
+        const domain = data.DistributionList?.Items?.[0].DomainName;
+        if (domain) {
+          app.set('domain', domain);
+          console.info(`domain: ${domain}`);
+        } else {
+          console.error(`I'm a little teapot: Bad CDN distribution domain.`);
+        }
+      };
+      if (err) { console.error(`I'm a big teapot: `, JSON.stringify(err)); }
+    });
+  }
+}
 
 // load app icon
 var faviconPath = path.join(__dirname, 'public/favicon', 'favicon.ico');
