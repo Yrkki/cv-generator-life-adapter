@@ -46,7 +46,8 @@ nconf.defaults({
     "cdn": "https://<distribution>.cloudfront.net/deploy/public"
   },
   "locationSelector": "cdn",
-  "skipRedirectToHttps": false
+  "skipRedirectToHttps": false,
+  "useSpdy": false
 });
 
 // compress responses
@@ -69,6 +70,7 @@ const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_AD
 const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + location.toUpperCase()],
   'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
 const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS, 'skipRedirectToHttps', false);
+const useSpdy = mapEnv2Config('Use HTTP/2', process.env.CV_GENERATOR_LIFE_ADAPTER_USE_SPDY, 'useSpdy', false);
 console.log();
 
 // override console log
