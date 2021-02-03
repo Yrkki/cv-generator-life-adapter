@@ -1,4 +1,5 @@
 {
+    "appName": "cv-generator-life-adapter",
     "debug": "false",
     "endpointType": "CloudFront",
     "http": {
@@ -17,4 +18,4 @@
     },
     "locationSelector": "cdn",
     "skipRedirectToHttps": false
-  }
+}

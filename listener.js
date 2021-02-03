@@ -93,8 +93,16 @@ function showConnectionMessage(error) {
     return process.exit(1);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`Welcome to the ${nodeName()}.`);
+    console.log(`Welcome to the ${appName()}.`);
   }
+}
+
+/**
+ * Get the application name.
+ */
+
+function appName() {
+  return app.get('appName') || nodeName();
 }
 
 /**
@@ -124,7 +132,7 @@ function createServer(app, config, certPath = 'cert', certName) {
 
   // Get certificate name.
   if (!certName) {
-    certName = nodeName();
+    certName = appName();
   }
 
   if (config.useSpdy) {

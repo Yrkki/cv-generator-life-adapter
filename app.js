@@ -28,6 +28,7 @@ app.set('view engine', 'pug');
 nconf.argv().env();
 nconf.file({ file: 'config.json' });
 nconf.defaults({
+  "appName": "cv-generator-life-adapter",
   "debug": "false",
   "endpointType": "CloudFront",
   "http": {
@@ -61,12 +62,13 @@ function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey
 
 // map environment to configuration
 console.log();
+const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME, 'appName', false);
 const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG, 'debug', false);
 const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE, 'endpointType', 'CloudFront');
 const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION, 'locationSelector', 'default');
 const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + location.toUpperCase()],
   'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
-const skipRedirectToHttps = mapEnv2Config('Redirect http', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS, 'skipRedirectToHttps', false);
+const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS, 'skipRedirectToHttps', false);
 console.log();
 
 // override console log
