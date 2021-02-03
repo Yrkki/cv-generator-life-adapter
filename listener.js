@@ -86,14 +86,14 @@ function onListening(server) {
  * Show connection message.
  */
 
-function showConnectionMessage(error) {
+function showConnectionMessage(error, app) {
   if (error) {
     // eslint-disable-next-line no-console
     console.error(error);
     return process.exit(1);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`Welcome to the ${appName()}.`);
+    console.log(`Welcome to the ${appName(app)}.`);
   }
 }
 
@@ -101,7 +101,7 @@ function showConnectionMessage(error) {
  * Get the application name.
  */
 
-function appName() {
+function appName(app) {
   return app.get('appName') || nodeName();
 }
 
@@ -132,7 +132,7 @@ function createServer(app, config, certPath = 'cert', certName) {
 
   // Get certificate name.
   if (!certName) {
-    certName = appName();
+    certName = appName(app);
   }
 
   if (config.useSpdy) {
@@ -193,7 +193,7 @@ function listen(app, port, welcome, server, config, certPath, certName) {
 
   // Show connection message.
   if (!welcome) {
-    welcome = showConnectionMessage;
+    welcome = (error) => showConnectionMessage(error, app);
   }
 
   if (config.useSpdy) {
