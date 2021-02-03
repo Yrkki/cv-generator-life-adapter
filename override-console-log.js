@@ -1,11 +1,22 @@
-var spacer = '  ';
+#!/usr/bin/env node
 
-function overrideConsoleLog() {
+// 'use strict';
+
+function overrideConsoleLog(debug, spacer = '  ') {
     var _log = console.log;
     var _info = console.info;
     var _debug = console.debug;
     var _warn = console.warn;
     var _error = console.error;
+
+    if (debug !== 'true') {
+        console.log = function () { };
+        console.info = function () { };
+        console.debug = function () { };
+        console.warning = function () { };
+        console.error = function () { };
+        return;
+    }
 
     console.log = function (message) {
         message = `${spacer}${message}`;

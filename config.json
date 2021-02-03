@@ -1,4 +1,6 @@
 {
+    "debug": "false",
+    "endpointType": "CloudFront",
     "http": {
         "port": 2500,
         "hosts": [
@@ -9,7 +11,10 @@
     },
     "location": {
         "default": "public",
-        "aws": "deploy/public"
+        "aws": "deploy/public",
+        "s3": "https://<bucket>.<region>.amazonaws.com/deploy/public",
+        "cdn": "https://<distribution>.cloudfront.net/deploy/public"
     },
-    "endpointType": "CloudFront"
+    "locationSelector": "cdn",
+    "skipRedirectToHttps": false
   }

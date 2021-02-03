@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+'use strict';
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -24,6 +28,8 @@ app.set('view engine', 'pug');
 nconf.argv().env();
 nconf.file({ file: 'config.json' });
 nconf.defaults({
+  "debug": "false",
+  "endpointType": "CloudFront",
   "http": {
     "port": 2500,
     "hosts": [
@@ -34,32 +40,38 @@ nconf.defaults({
   },
   "location": {
     "default": "public",
-    "aws": "deploy/public"
+    "aws": "deploy/public",
+    "s3": "https://<bucket>.<region>.amazonaws.com/deploy/public",
+    "cdn": "https://<distribution>.cloudfront.net/deploy/public"
   },
-  "endpointType": "CloudFront"
+  "locationSelector": "cdn",
+  "skipRedirectToHttps": false
 });
 
 // compress responses
 app.use(compression());
 
+/* Map environment to configuration. */
+function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey) {
+  const retVal = (envVar || nconf.get(configKey) || defaultValue);
+  app.set(key, retVal);
+  console.info(`${message}: ${retVal}`);
+  return retVal;
+}
+
+// map environment to configuration
+console.log();
+const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG, 'debug', false);
+const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE, 'endpointType', 'CloudFront');
+const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION, 'locationSelector', 'default');
+const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + location.toUpperCase()],
+  'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
+const skipRedirectToHttps = mapEnv2Config('Redirect http', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS, 'skipRedirectToHttps', false);
+console.log();
+
 // override console log
 var overrideConsoleLog = require('./override-console-log');
-overrideConsoleLog();
-
-// set up data location
-const location = (process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION || 'default');
-app.set('location', location);
-console.info(`Data location: ${location}`);
-
-// set up data prefix
-const prefix = nconf.get('location:' + location);
-app.set('prefix', prefix);
-console.info(`Data prefix: ${prefix}`);
-
-// set up endpoint type
-const endpointType = (process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE || nconf.get('endpointType') || 'CloudFront');
-app.set('endpointType', endpointType);
-console.info(`Endpoint type: ${endpointType}`);
+overrideConsoleLog(debug);
 
 // set up CDN domain name
 var endpoints = require('./public/javascripts/aws');
@@ -96,15 +108,18 @@ app.use(cookieParser());
 
 app.use(cors());
 
-/* Redirect http to https */
+// Redirect http to https
+/*eslint complexity: ["error", 5]*/
 app.get('*', function (req, res, next) {
-  if (req.headers['x-forwarded-proto'] != 'https' && !nconf.get('http:hosts').includes(req.hostname)) {
-    var url = 'https://' + req.hostname;
-    // var port = app.get('port');
-    // if (port)
-    //   url += ":" + port;
+  console.debug(`get: req.protocol: ${req.protocol}`);
+  if ((!req.secure || req.headers['x-forwarded-proto'] !== 'https') &&
+    !['true', 'TRUE'].includes(skipRedirectToHttps) &&
+    !nconf.get('http:hosts').includes(req.hostname)
+  ) {
+    var url = 'https://';
+    url += req.hostname;
     url += req.url;
-    res.redirect(url);
+    res.redirect(301, url);
   }
   else
     next() /* Continue to other routes if we're not redirecting */

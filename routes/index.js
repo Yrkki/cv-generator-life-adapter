@@ -13,8 +13,8 @@ router.get(/.*/, function (req, res, next) {
 
     console.info('Getting:', key);
     if (prefix.startsWith('http')) {
-      console.info(`Redirecting: key: ${key}.`);
-      res.redirect(key);
+      console.info(`Redirecting: http* key: ${key}.`);
+      res.redirect(301, key);
     } else {
       const location = req.app.get('location');
       if (location.includes('aws')) {
@@ -25,8 +25,8 @@ router.get(/.*/, function (req, res, next) {
           if (domain) {
             console.debug(`Checking data: distro domain: ${JSON.stringify(domain)}, req.hostname: ${req.hostname}, req.DomainName: ${req.DomainName}, key: ${key}`);
             const url = `https://${domain}/${key}`;
-            console.info(`Redirecting: url: ${url}.`);
-            res.redirect(url);
+            console.info(`Redirecting: cdn url: ${url}.`);
+            res.redirect(301, url);
           } else {
             console.error(`I'm a little teapot: Bad CDN distribution domain.`);
           }
@@ -58,7 +58,7 @@ router.get(/.*/, function (req, res, next) {
       }
     }
   } else {
-    console.info('Redirecting home.');
+    console.info('Home.');
     res.render('index', { title: req.app.get('appName') });
   }
 });
@@ -66,7 +66,6 @@ router.get(/.*/, function (req, res, next) {
 /* allow CORS. */
 function allowCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.setHeader('Access-Control-Allow-Headers', req.headers.origin);
   res.setHeader('Access-Control-Allow-Headers', '*');
 }
 
