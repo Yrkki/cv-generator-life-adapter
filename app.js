@@ -18,8 +18,6 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
-app.set('appName', 'Life Adapter');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -28,7 +26,8 @@ app.set('view engine', 'pug');
 nconf.argv().env();
 nconf.file({ file: 'config.json' });
 nconf.defaults({
-  "appName": "cv-generator-life-adapter",
+  "appName": "Life Adapter",
+  "appPackageName": "cv-generator-life-adapter",
   "debug": "false",
   "endpointType": "CloudFront",
   "http": {
@@ -64,6 +63,7 @@ function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey
 // map environment to configuration
 console.log();
 const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME, 'appName', false);
+const appPackageName = mapEnv2Config('Application package name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_PACKAGE_NAME, 'appPackageName', false);
 const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG, 'debug', false);
 const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE, 'endpointType', 'CloudFront');
 const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION, 'locationSelector', 'default');
