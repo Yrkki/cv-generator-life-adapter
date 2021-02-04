@@ -93,7 +93,7 @@ function showConnectionMessage(error, app) {
     return process.exit(1);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`Welcome to the ${appPackageName(app)}.`);
+    console.log(`Welcome to the ${app.get('appName')}.`);
   }
 }
 

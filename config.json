@@ -17,7 +17,7 @@
         "s3": "https://<bucket>.<region>.amazonaws.com/deploy/public",
         "cdn": "https://<distribution>.cloudfront.net/deploy/public"
     },
-    "locationSelector": "cdn",
-    "skipRedirectToHttps": false,
+    "locationSelector": "default",
+    "skipRedirectToHttps": true,
     "useSpdy": false
 }

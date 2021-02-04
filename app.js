@@ -44,8 +44,8 @@ nconf.defaults({
     "s3": "https://<bucket>.<region>.amazonaws.com/deploy/public",
     "cdn": "https://<distribution>.cloudfront.net/deploy/public"
   },
-  "locationSelector": "cdn",
-  "skipRedirectToHttps": false,
+  "locationSelector": "default",
+  "skipRedirectToHttps": true,
   "useSpdy": false
 });
 
@@ -62,15 +62,22 @@ function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey
 
 // map environment to configuration
 console.log();
-const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME, 'appName', false);
-const appPackageName = mapEnv2Config('Application package name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_PACKAGE_NAME, 'appPackageName', false);
-const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG, 'debug', false);
-const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE, 'endpointType', 'CloudFront');
-const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION, 'locationSelector', 'default');
+const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME,
+  'appName', 'Life Adapter');
+const appPackageName = mapEnv2Config('Application package name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_PACKAGE_NAME,
+  'appPackageName', 'cv-generator-life-adapter');
+const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG,
+  'debug', false);
+const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE,
+  'endpointType', 'CloudFront');
+const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION,
+  'locationSelector', 'default');
 const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + location.toUpperCase()],
   'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
-const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS, 'skipRedirectToHttps', false);
-const useSpdy = mapEnv2Config('Use HTTP/2', process.env.CV_GENERATOR_LIFE_ADAPTER_USE_SPDY, 'useSpdy', false);
+const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS,
+  'skipRedirectToHttps', true);
+const useSpdy = mapEnv2Config('Use HTTP/2', process.env.CV_GENERATOR_LIFE_ADAPTER_USE_SPDY,
+  'useSpdy', false);
 console.log();
 
 // override console log
