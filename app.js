@@ -62,12 +62,16 @@ function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey
 
 // map environment to configuration
 console.log();
+const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG,
+  'debug', false);
+// override console log
+require('./override-console-log')(debug);
+
 const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME,
   'appName', 'Life Adapter');
 const appPackageName = mapEnv2Config('Application package name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_PACKAGE_NAME,
   'appPackageName', 'cv-generator-life-adapter');
-const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_DEBUG,
-  'debug', false);
+
 const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE,
   'endpointType', 'CloudFront');
 const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION,
@@ -79,10 +83,6 @@ const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.
 const useSpdy = mapEnv2Config('Use HTTP/2', process.env.CV_GENERATOR_LIFE_ADAPTER_USE_SPDY,
   'useSpdy', false);
 console.log();
-
-// override console log
-var overrideConsoleLog = require('./override-console-log');
-overrideConsoleLog(debug);
 
 // set up CDN domain name
 var endpoints = require('./public/javascripts/aws');
@@ -122,7 +122,7 @@ app.use(cors());
 // Redirect http to https
 /*eslint complexity: ["error", 5]*/
 app.get('*', function (req, res, next) {
-  console.debug(`get: req.protocol: ${req.protocol}`);
+  console.debug(`app.js: get: req.protocol: ${req.protocol}`);
   if ((!req.secure || req.headers['x-forwarded-proto'] !== 'https') &&
     !['true', 'TRUE'].includes(skipRedirectToHttps) &&
     !nconf.get('http:hosts').includes(req.hostname)
