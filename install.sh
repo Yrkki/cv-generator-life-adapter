@@ -15,23 +15,23 @@ app=cv-generator-life-adapter
 
 report() {
   heroku config -a $app
-  # heroku run env
+  # heroku run env -a $app
 }
 
 report
 echo
 
-maintenanceIsOff=$(heroku maintenance)
+maintenanceIsOff=$(heroku maintenance -a $app)
 
 if [ $maintenanceIsOff == "off" ]; then
-  heroku maintenance:on
+  heroku maintenance:on -a $app
 fi
 
 cat ./env.sh | sed "s/export /heroku config:set -a $app /g" > env-remote.sh
 . ./env-remote.sh
 
 if [ $maintenanceIsOff == "off" ]; then
-  heroku maintenance:off
+  heroku maintenance:off -a $app
 fi
 
 report
