@@ -67,6 +67,6 @@ router.get(/.*/, function (req, res, next) {
 function allowCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
-}
+};
 
 module.exports = router;

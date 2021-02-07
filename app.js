@@ -52,13 +52,18 @@ nconf.defaults({
 // compress responses
 app.use(compression());
 
+/* To snake upper case. */
+function toSnakeUpperCase(str) {
+  return str.replace(/[A-Z]/g, _ => `_${_.toUpperCase()}`);
+};
+
 /* Map environment to configuration. */
 function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey) {
   const retVal = (envVar || nconf.get(configKey) || defaultValue);
   app.set(key, retVal);
   console.info(`${message}: ${retVal}`);
   return retVal;
-}
+};
 
 // map environment to configuration
 console.log();
@@ -66,6 +71,7 @@ const debug = mapEnv2Config('Debug mode', process.env.CV_GENERATOR_LIFE_ADAPTER_
   'debug', false);
 // override console log
 require('./override-console-log')(debug);
+console.log();
 
 const appName = mapEnv2Config('Application name', process.env.CV_GENERATOR_LIFE_ADAPTER_APP_NAME,
   'appName', 'Life Adapter');
@@ -76,7 +82,7 @@ const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIF
   'endpointType', 'CloudFront');
 const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION,
   'locationSelector', 'default');
-const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + location.toUpperCase()],
+const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + toSnakeUpperCase(location)],
   'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
 const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS,
   'skipRedirectToHttps', true);

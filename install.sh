@@ -21,15 +21,25 @@ report() {
 report
 echo
 
+maintenanceIsOff=$(heroku maintenance)
+
+if [ $maintenanceIsOff == "off" ]; then
+  heroku maintenance:on
+fi
+
 cat ./env.sh | sed "s/export /heroku config:set -a $app /g" > env-remote.sh
 . ./env-remote.sh
+
+if [ $maintenanceIsOff == "off" ]; then
+  heroku maintenance:off
+fi
 
 report
 echo
 
 
 echo
-echo $'\033[1;32m'Environment installed...$'\033[0m'
+echo $'\033[1;32m'Environment installed.$'\033[0m'
 
 echo
 # read  -n 1 -p "x" input

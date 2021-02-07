@@ -9,7 +9,7 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
     "dev:plan:update:report:action:update-packages": "npm-run-all update-packages:*",
-    "update-packages:npx-npm-check-updates-u": "npx npm-check-updates -u --packageFile package.json && npm install"
+    "update-packages:npx-npm-check-updates --timeout 600000-u": "npx npm-check-updates --timeout 600000 -u --packageFile package.json && npm install --legacy-peer-deps"
   },
   "keywords": [
     "CV Generator",
@@ -18,7 +18,7 @@
   "author": "jorich",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.834.0",
+    "aws-sdk": "^2.839.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.5",
     "cors": "^2.8.5",
@@ -30,11 +30,11 @@
     "nconf": "^0.11.2",
     "pug": "^3.0.0",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.440.1",
+    "snyk": "^1.446.0",
     "spdy": "^4.0.2"
   },
   "engines": {
-    "node": "14.8.0"
+    "node": "15.8.0"
   },
   "snyk": true
 }

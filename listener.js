@@ -94,6 +94,8 @@ function showConnectionMessage(error, app) {
   } else {
     // eslint-disable-next-line no-console
     console.log(`Welcome to the ${app.get('appName')}.`);
+    // eslint-disable-next-line no-console
+    console.log();
   }
 }
 
