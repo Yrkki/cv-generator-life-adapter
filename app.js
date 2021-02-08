@@ -59,6 +59,7 @@ function toSnakeUpperCase(str) {
 
 /* Map environment to configuration. */
 function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey) {
+  console.debug(`app.js: mapEnv2Config: message: ${message}, envVar: ${envVar}, configKey: ${configKey}, defaultValue: ${defaultValue}`);
   const retVal = (envVar || nconf.get(configKey) || defaultValue);
   app.set(key, retVal);
   console.info(`${message}: ${retVal}`);
@@ -80,10 +81,12 @@ const appPackageName = mapEnv2Config('Application package name', process.env.CV_
 
 const endpointType = mapEnv2Config('Endpoint type', process.env.CV_GENERATOR_LIFE_ADAPTER_ENDPOINT_TYPE,
   'endpointType', 'CloudFront');
+
 const location = mapEnv2Config('Data location', process.env.CV_GENERATOR_LIFE_ADAPTER_LOCATION,
   'locationSelector', 'default');
 const prefix = mapEnv2Config('Data prefix', process.env['CV_GENERATOR_LIFE_ADAPTER_LOCATION_' + toSnakeUpperCase(location)],
   'location:' + location, 'https://<distribution>.cloudfront.net/deploy/public', 'prefix');
+
 const skipRedirectToHttps = mapEnv2Config('Skip redirect to https', process.env.CV_GENERATOR_LIFE_ADAPTER_SKIP_REDIRECT_TO_HTTPS,
   'skipRedirectToHttps', true);
 const useSpdy = mapEnv2Config('Use HTTP/2', process.env.CV_GENERATOR_LIFE_ADAPTER_USE_SPDY,
