@@ -55,7 +55,7 @@ app.use(compression());
 /* To snake case. */
 function toSnakeCase(str) {
   return str.replace(/[A-Z]/g, _ => `_${_}`);
-};
+}
 
 /* Map environment to configuration. */
 function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey) {
@@ -63,7 +63,7 @@ function mapEnv2Config(message, envVar, configKey, defaultValue, key = configKey
   app.set(key, retVal);
   console.info(`${message}: ${retVal}`);
   return retVal;
-};
+}
 
 // map environment to configuration
 console.log();
