@@ -1,6 +1,6 @@
 # Life Adapter
 
-Reverse proxy for the LifeSpan family of products
+Reverse proxy for the LifeSpan℠. family of products
 
 ---
 
