@@ -30,11 +30,14 @@
     "nconf": "^0.11.3",
     "pug": "^3.0.2",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.704.0",
+    "snyk": "^1.707.0",
     "spdy": "^4.0.2"
   },
   "engines": {
     "node": "15.11.0"
   },
-  "snyk": true
+  "snyk": true,
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
 }
