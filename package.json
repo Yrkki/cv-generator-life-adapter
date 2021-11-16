@@ -18,9 +18,9 @@
   "author": "jorich",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.1029.0",
+    "aws-sdk": "^2.1030.0",
     "compression": "^1.7.4",
-    "cookie-parser": "~1.4.5",
+    "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
     "debug": "~4.3.2",
     "express": "~4.17.1",
