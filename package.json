@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@snyk/protect": "^1.881.0",
-    "aws-sdk": "^2.1099.0",
+    "aws-sdk": "^2.1100.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
