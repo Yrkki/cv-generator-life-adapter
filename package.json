@@ -18,8 +18,8 @@
   "author": "jorich",
   "license": "MIT",
   "dependencies": {
-    "@snyk/protect": "^1.908.0",
-    "aws-sdk": "^2.1118.0",
+    "@snyk/protect": "^1.910.0",
+    "aws-sdk": "^2.1119.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
