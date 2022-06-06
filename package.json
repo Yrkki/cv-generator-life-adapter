@@ -16,7 +16,7 @@
     "LifeAdapter"
   ],
   "author": "jorich",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "@snyk/protect": "^1.946.0",
     "aws-sdk": "^2.1148.0",
