@@ -18,8 +18,8 @@
   "author": "jorich",
   "license": "Apache-2.0",
   "dependencies": {
-    "@snyk/protect": "^1.1256.0",
-    "aws-sdk": "^2.1504.0",
+    "@snyk/protect": "^1.1257.0",
+    "aws-sdk": "^2.1506.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
