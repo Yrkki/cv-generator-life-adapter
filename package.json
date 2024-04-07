@@ -34,7 +34,7 @@
     "spdy": "^4.0.2"
   },
   "engines": {
-    "node": "<20"
+    "node": "<22"
   },
   "snyk": true
 }
