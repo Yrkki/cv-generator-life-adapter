@@ -36,5 +36,9 @@ run:
       value-from: "arn:aws:ssm:eu-west-1:801610064192:parameter/cv-generator-life-adapter/CV_GENERATOR_LIFE_ADAPTER_USE_SPDY"
     - name: NODE_TLS_REJECT_UNAUTHORIZED
       value-from: "arn:aws:ssm:eu-west-1:801610064192:parameter/cv-generator-life-adapter/NODE_TLS_REJECT_UNAUTHORIZED"
+    - name: ERROR_PAGE_URL
+      value-from: "arn:aws:ssm:eu-west-1:801610064192:parameter/cv-generator-life-adapter/ERROR_PAGE_URL"
+    - name: MAINTENANCE_PAGE_URL
+      value-from: "arn:aws:ssm:eu-west-1:801610064192:parameter/cv-generator-life-adapter/MAINTENANCE_PAGE_URL"
     - name: S3_BUCKET_NAME
       value-from: "arn:aws:ssm:eu-west-1:801610064192:parameter/cv-generator-life-adapter/S3_BUCKET_NAME"
