@@ -19,7 +19,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@snyk/protect": "^1.1292.1",
-    "aws-sdk": "^2.1655.0",
+    "aws-sdk": "^2.1656.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
