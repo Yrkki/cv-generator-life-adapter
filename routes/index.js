@@ -8,7 +8,7 @@ router.get(/.*/, function (req, res, next) {
   allowCors(req, res);
   if (req.url.length > 1) {
     const prefix = req.app.get('prefix');
-    const key = decodeURI(prefix + req.url);
+    const key = decodeURI(prefix + encodeURIComponent(req.url));
     const endpointType = req.app.get('endpointType');
 
     console.info('Getting:', key);
