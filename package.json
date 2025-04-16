@@ -20,7 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.787.0",
     "@aws-sdk/client-s3": "^3.787.0",
-    "@snyk/protect": "^1.1296.1",
+    "@snyk/protect": "^1.1296.2",
     "compression": "^1.8.0",
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.5",
