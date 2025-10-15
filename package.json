@@ -18,8 +18,8 @@
   "author": "jorich",
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/client-cloudfront": "^3.910.0",
-    "@aws-sdk/client-s3": "^3.910.0",
+    "@aws-sdk/client-cloudfront": "^3.911.0",
+    "@aws-sdk/client-s3": "^3.911.0",
     "@snyk/protect": "^1.1300.0",
     "compression": "^1.8.1",
     "cookie-parser": "~1.4.7",
