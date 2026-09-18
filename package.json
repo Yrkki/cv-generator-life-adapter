@@ -24,9 +24,9 @@
   "author": "jorich",
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/client-cloudfront": "^3.1135.0",
-    "@aws-sdk/client-s3": "^3.1135.0",
-    "@snyk/protect": "^1.1307.2",
+    "@aws-sdk/client-cloudfront": "^3.1136.0",
+    "@aws-sdk/client-s3": "^3.1136.0",
+    "@snyk/protect": "^1.1307.3",
     "compression": "^1.8.2",
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.6",
